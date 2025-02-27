@@ -1,0 +1,30 @@
+import os
+
+# Aqui você vai escolher as duas pastas
+pasta_principal = "Cadastros do SEI"
+pasta_secundaria = "Cadastros a serem verificados"
+
+def listar_nomes(pasta):
+    if os.path.exists(pasta):  # Isso serve para ver se existe uma pasta
+        return {os.path.splitext(arquivo)[0] for arquivo in os.listdir(pasta)}  
+    else:
+        print(f"Erro: A pasta '{pasta}' não existe.")
+        return set()
+
+def comparar_nomes():
+    """Compara os nomes dos arquivos nas pastas e exibe as correspondências e diferenças."""
+    nomes_principal = listar_nomes(pasta_principal)
+    nomes_secundaria = listar_nomes(pasta_secundaria)
+
+    comuns = nomes_secundaria.intersection(nomes_principal)  # Colocar o nome das pastas
+    exclusivos_secundaria = nomes_secundaria.difference(nomes_principal)  # Colocar o nome das pastas
+
+    print("\n✅ Nomes que estão em ambas as pastas:")
+    for nome in comuns:
+        print(f"  - {nome}")
+
+    print("\n❌ Nomes que estão apenas na pasta secundária:")
+    for nome in exclusivos_secundaria:
+        print(f"  - {nome}")
+
+comparar_nomes()
